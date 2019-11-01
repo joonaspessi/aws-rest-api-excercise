@@ -5,47 +5,50 @@ const AWS = require("aws-sdk"); // eslint-disable-line import/no-extraneous-depe
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
-module.exports.create = (event, context, callback) => {
-  const timestamp = new Date().getTime();
-  const data = JSON.parse(event.body);
-  if (typeof data.text !== "string") {
-    console.error("Validation Failed");
-    callback(null, {
-      statusCode: 400,
-      headers: { "Content-Type": "text/plain" },
-      body: "Couldn't create the equipment items."
-    });
-    return;
-  }
+const { populateEquipments } = require("./../utils/equipmentUtil");
 
+module.exports.populate = (event, context, callback) => {
+  const equipments = populateEquipments();
+  console.log("[DEBUG] equipments", equipments);
   const params = {
-    TableName: process.env.DYNAMODB_TABLE,
-    Item: {
-      id: uuid.v1(),
-      text: data.text,
-      checked: false,
-      createdAt: timestamp,
-      updatedAt: timestamp
+    RequestItems: {
+      [process.env.DYNAMODB_TABLE]: equipments.map(equipment => ({
+        PutRequest: {
+          Item: equipment
+        }
+      }))
     }
   };
 
-  dynamoDb.put(params, error => {
+  console.log("[DEBUG] params");
+  console.log(JSON.stringify(params, null, 2));
+  return dynamoDb.batchWrite(params, (error, data) => {
+    console.log("[DEBUG] Callback");
     // handle potential errors
     if (error) {
       console.error(error);
       callback(null, {
         statusCode: error.statusCode || 501,
-        headers: { "Content-Type": "text/plain" },
+        headers: {
+          "Content-Type": "text/plain",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true
+        },
         body: "Couldn't create the equipment items."
       });
-      return;
-    }
+    } else {
+      console.log("[DEBUG] data", data);
 
-    // create a response
-    const response = {
-      statusCode: 200,
-      body: JSON.stringify(params.Item)
-    };
-    callback(null, response);
+      // create a response
+      const response = {
+        statusCode: 200,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true
+        },
+        body: JSON.stringify(equipments)
+      };
+      callback(null, response);
+    }
   });
 };
