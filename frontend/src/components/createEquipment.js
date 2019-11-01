@@ -15,8 +15,6 @@ class CreateEquipment extends React.Component {
     const end = this.state.end;
     const status = this.state.status === true; // Take undefined as false
 
-    console.log(id, address, start, end, status);
-
     if (
       id === undefined ||
       address === undefined ||
@@ -39,7 +37,6 @@ class CreateEquipment extends React.Component {
   checkboxUpdated(e) {
     const key = e.target.id;
     const value = e.target.checked;
-    console.log(key, value);
 
     this.setState({
       [key]: value
@@ -49,7 +46,6 @@ class CreateEquipment extends React.Component {
   inputUpdated(e) {
     const key = e.target.id;
     const value = e.target.value;
-    console.log(key, value);
     this.setState({
       [key]: value
     });
