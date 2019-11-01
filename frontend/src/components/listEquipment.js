@@ -33,7 +33,7 @@ class ListEquipment extends React.Component {
   renderEquipmentList(equipment) {
     return equipment.map(e => {
       return (
-        <div className="equipment-row">
+        <div className="equipment-row" key={e.id}>
           <div className="id">{e.id}</div>
           <div className="address">{e.address}</div>
           <div className="start">
