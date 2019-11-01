@@ -39,6 +39,7 @@
 }
 
 .create-label, .create-input {
+  font-weight: bold;
   width: 80%;
   display: block;
   margin: 5px 0;
@@ -49,4 +50,57 @@
   width: 50%;
   display: block;
   margin: 5px 0;
+}
+
+.equipment-list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.equipment-row {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
+
+.equipment-row > div {
+  flex: 1;
+  border: 1px solid #DDD;
+  padding: 5px;
+}
+
+.header-row {
+  display: flex;
+  flex-direction: row;
+  font-weight: bold;
+}
+
+.header-item {
+  flex: 1;
+}
+
+.details-table {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.details-row {
+  margin: 5px 0;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
+
+.details-row > div {
+  flex: 1;
+}
+
+.details-label {
+  font-weight: bold;
+}
+
+.search-form > label {
+  font-weight: bold;
 }
