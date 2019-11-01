@@ -12,15 +12,15 @@ function App() {
   }
 
   async function submitPopulate() {
-    API.populate();
+    return await API.populate();
   }
 
-  async function submitList() {
-    API.list();
+  async function submitList(limit) {
+    return await API.list(limit);
   }
 
   async function submitGet(identifier) {
-    API.get(identifier);
+    return await API.get(identifier);
   }
 
   return (
