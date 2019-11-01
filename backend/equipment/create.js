@@ -5,6 +5,17 @@ const AWS = require("aws-sdk"); // eslint-disable-line import/no-extraneous-depe
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
+const createEquipment = () => {
+  const timestamp = new Date().getTime();
+  return {
+    id: uuid.v1(),
+    address: "foobar",
+    contactStartDate: timestamp,
+    contractEndDate: timestamp,
+    status: "Running"
+  };
+};
+
 module.exports.create = (event, context, callback) => {
   const timestamp = new Date().getTime();
   const data = JSON.parse(event.body);
@@ -20,13 +31,7 @@ module.exports.create = (event, context, callback) => {
 
   const params = {
     TableName: process.env.DYNAMODB_TABLE,
-    Item: {
-      id: uuid.v1(),
-      text: data.text,
-      checked: false,
-      createdAt: timestamp,
-      updatedAt: timestamp
-    }
+    Equipment: createEquipment()
   };
 
   dynamoDb.put(params, error => {
