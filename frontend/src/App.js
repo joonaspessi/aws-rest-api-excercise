@@ -1,24 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import CreateEquipment from "./components/createEquipment";
+import ListEquipment from "./components/listEquipment";
+import ShowEquipment from "./components/showEquipment";
+import PopulateEquipment from "./components/populateEquipment";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <header className="App-header">Equipment system</header>
+      <div className="content">
+        <div className="content-area">
+          <CreateEquipment></CreateEquipment>
+        </div>
+        <div className="content-area">
+          <PopulateEquipment></PopulateEquipment>
+        </div>
+        <div className="content-area">
+          <ListEquipment></ListEquipment>
+        </div>
+        <div className="content-area">
+          <ShowEquipment></ShowEquipment>
+        </div>
+      </div>
     </div>
   );
 }
