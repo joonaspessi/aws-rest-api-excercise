@@ -30,8 +30,8 @@ class CreateEquipment extends React.Component {
     this.props.submit({
       id,
       address,
-      start,
-      end,
+      contractStartDate: start,
+      contractEndDate: end,
       status
     });
   }

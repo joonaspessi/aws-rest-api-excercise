@@ -7,8 +7,8 @@ import PopulateEquipment from "./components/populateEquipment";
 import * as API from "./util/api";
 
 function App() {
-  async function submitCreate() {
-    API.create();
+  async function submitCreate(equipment) {
+    await API.create(equipment);
   }
 
   async function submitPopulate() {
