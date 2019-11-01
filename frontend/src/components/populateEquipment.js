@@ -1,10 +1,10 @@
 import React from 'react';
 
-function PopulateEquipment() {
+function PopulateEquipment(props) {
     return (
         <div className="create-equipment">
             <h2>Populate more equipment</h2>
-            <button className="populate">
+            <button className="populate" onClick={props.submit}>
                 Populate
             </button>
         </div>

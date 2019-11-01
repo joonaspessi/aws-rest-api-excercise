@@ -38,10 +38,15 @@
   width: 100%;
 }
 
-.create-label {
-
+.create-label, .create-input {
+  width: 80%;
+  display: block;
+  margin: 5px 0;
 }
 
-.create-input {
 
+.search-form > input, .search-form > label {
+  width: 50%;
+  display: block;
+  margin: 5px 0;
 }
