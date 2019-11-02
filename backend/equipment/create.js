@@ -11,7 +11,6 @@ module.exports.create = (event, context, callback) => {
   try {
     equipment = JSON.parse(event.body);
   } catch (e) {
-    console.error(e);
     callback(null, {
       statusCode: 400,
       headers: {
