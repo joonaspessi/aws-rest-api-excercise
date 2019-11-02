@@ -1,6 +1,7 @@
-import * as axios from "axios";
+import * as axios from 'axios';
 
-const BASE_URL = "https://ur84v76nqd.execute-api.us-east-1.amazonaws.com/dev";
+const BASE_URL =
+  'https://k5ajkgsiu5.execute-api.us-east-1.amazonaws.com/development';
 
 export async function create(equipment) {
   // Naive implementation relying on the frontend component data model
@@ -12,7 +13,9 @@ export async function create(equipment) {
 }
 
 export async function list(limit) {
-  const response = await axios.get(`${BASE_URL}/equipment${limit === undefined ? '': '?limit=' + limit}`);
+  const response = await axios.get(
+    `${BASE_URL}/equipment${limit === undefined ? '' : '?limit=' + limit}`
+  );
   if (response.status === 200) {
     return response.data;
   }
@@ -28,7 +31,7 @@ export async function get(equipmentID) {
 }
 
 export async function populate() {
- const response = await axios.post(`${BASE_URL}/equipment/populate`, {});
+  const response = await axios.post(`${BASE_URL}/equipment/populate`, {});
   if (response.status === 200) {
     return response.data;
   }
