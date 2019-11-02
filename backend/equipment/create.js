@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
-const AWS = require("aws-sdk"); // eslint-disable-line import/no-extraneous-dependencies
+const AWS = require('aws-sdk');
 
-const { createEquipment } = require("./../utils/equipmentUtil");
+const { createEquipment } = require('./../utils/equipmentUtil');
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
@@ -15,9 +15,9 @@ module.exports.create = (event, context, callback) => {
     callback(null, {
       statusCode: 400,
       headers: {
-        "Content-Type": "text/plain",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Credentials": true
+        'Content-Type': 'text/plain',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
       },
       body: "Couldn't create the equipment item. Invalid equipment payload"
     });
@@ -35,9 +35,9 @@ module.exports.create = (event, context, callback) => {
       callback(null, {
         statusCode: error.statusCode || 501,
         headers: {
-          "Content-Type": "text/plain",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Credentials": true
+          'Content-Type': 'text/plain',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true
         },
         body: "Couldn't create the equipment item."
       });
@@ -48,8 +48,8 @@ module.exports.create = (event, context, callback) => {
     const response = {
       statusCode: 200,
       headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Credentials": true
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
       },
       body: JSON.stringify(params.Item)
     };
