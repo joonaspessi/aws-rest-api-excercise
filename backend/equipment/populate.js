@@ -9,7 +9,6 @@ const { populateEquipments } = require('./../utils/equipmentUtil');
 
 module.exports.populate = (event, context, callback) => {
   const equipments = populateEquipments();
-  console.log('[DEBUG] equipments', equipments);
   const params = {
     RequestItems: {
       [process.env.DYNAMODB_TABLE]: equipments.map(equipment => ({
@@ -20,8 +19,6 @@ module.exports.populate = (event, context, callback) => {
     }
   };
 
-  console.log('[DEBUG] params');
-  console.log(JSON.stringify(params, null, 2));
   return dynamoDb.batchWrite(params, (error, data) => {
     console.log('[DEBUG] Callback');
     // handle potential errors
@@ -37,8 +34,6 @@ module.exports.populate = (event, context, callback) => {
         body: "Couldn't create the equipment items."
       });
     } else {
-      console.log('[DEBUG] data', data);
-
       // create a response
       const response = {
         statusCode: 200,
