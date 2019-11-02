@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-const AWS = require("aws-sdk"); // eslint-disable-line import/no-extraneous-dependencies
+const AWS = require('aws-sdk'); // eslint-disable-line import/no-extraneous-dependencies
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
@@ -20,9 +20,9 @@ module.exports.list = (event, context, callback) => {
       callback(null, {
         statusCode: error.statusCode || 501,
         headers: {
-          "Content-Type": "text/plain",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Credentials": true
+          'Content-Type': 'text/plain',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true
         },
         body: "Couldn't fetch the equipments."
       });
@@ -33,8 +33,8 @@ module.exports.list = (event, context, callback) => {
     const response = {
       statusCode: 200,
       headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Credentials": true
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
       },
       body: JSON.stringify(result.Items)
     };

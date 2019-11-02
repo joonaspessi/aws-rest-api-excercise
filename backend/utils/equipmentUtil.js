@@ -1,14 +1,14 @@
-"use strict";
-const uuid = require("uuid");
-var addYears = require("date-fns/addYears");
+'use strict';
+const uuid = require('uuid');
+var addYears = require('date-fns/addYears');
 
 const createEquipment = ({
   id = uuid.v1(),
-  address = "N/A",
+  address = 'N/A',
   contractStartDate = new Date().getTime(),
   // By default add devices with 2 year contract
   contractEndDate = addYears(new Date().getTime(), 2).getTime(),
-  status = "Running"
+  status = 'Running'
 } = {}) => {
   return {
     id,
