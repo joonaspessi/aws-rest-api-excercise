@@ -6,20 +6,20 @@ const { createEquipment } = require('./../utils/equipmentUtil');
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
-module.exports.create = (event, context, callback) => {
+module.exports.create = async event => {
   let equipment;
   try {
     equipment = JSON.parse(event.body);
   } catch (e) {
-    callback(null, {
+    return {
       statusCode: 400,
       headers: {
         'Content-Type': 'text/plain',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true
       },
-      body: "Couldn't create the equipment item. Invalid equipment payload"
-    });
+      body: "Couldn't create the equipment item."
+    };
   }
 
   const params = {
@@ -27,31 +27,25 @@ module.exports.create = (event, context, callback) => {
     Item: createEquipment(equipment)
   };
 
-  return dynamoDb.put(params, error => {
-    // handle potential errors
-    if (error) {
-      console.error(error);
-      callback(null, {
-        statusCode: error.statusCode || 501,
-        headers: {
-          'Content-Type': 'text/plain',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true
-        },
-        body: "Couldn't create the equipment item."
-      });
-      return;
-    }
-
-    // create a response
-    const response = {
-      statusCode: 200,
+  try {
+    await dynamoDb.put(params).promise();
+  } catch (e) {
+    return {
+      statusCode: error.statusCode || 501,
       headers: {
+        'Content-Type': 'text/plain',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true
       },
-      body: JSON.stringify(params.Item)
+      body: "Couldn't create the equipment item."
     };
-    callback(null, response);
-  });
+  }
+  return {
+    statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true
+    },
+    body: JSON.stringify(params.Item)
+  };
 };
