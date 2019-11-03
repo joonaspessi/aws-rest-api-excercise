@@ -10,8 +10,14 @@ const equipmentSchema = Joi.object({
   address: Joi.string()
     .min(1)
     .required(),
-  contractStartDate: Joi.date().required(),
-  contractEndDate: Joi.date().required(),
+  contractStartDate: Joi.date()
+    .timestamp()
+    .raw()
+    .required(),
+  contractEndDate: Joi.date()
+    .timestamp()
+    .raw()
+    .required(),
   status: Joi.string().valid('Running', 'Stopped')
 });
 
