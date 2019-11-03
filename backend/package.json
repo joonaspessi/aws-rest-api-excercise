@@ -7,6 +7,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@hapi/joi": "^16.1.7",
     "aws-sdk": "^2.561.0",
     "date-fns": "^2.6.0",
     "uuid": "^3.3.3"

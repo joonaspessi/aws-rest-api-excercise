@@ -1,7 +1,7 @@
 'use strict';
 
 const uuid = require('uuid');
-const AWS = require('aws-sdk'); // eslint-disable-line import/no-extraneous-dependencies
+const AWS = require('aws-sdk');
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
@@ -27,11 +27,10 @@ module.exports.populate = (event, context, callback) => {
       callback(null, {
         statusCode: error.statusCode || 501,
         headers: {
-          'Content-Type': 'text/plain',
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Credentials': true
         },
-        body: "Couldn't create the equipment items."
+        body: JSON.stringify(error)
       });
     } else {
       // create a response

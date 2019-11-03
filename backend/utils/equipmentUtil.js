@@ -1,13 +1,43 @@
 'use strict';
 const uuid = require('uuid');
-var addYears = require('date-fns/addYears');
+const addYears = require('date-fns/addYears');
+const Joi = require('@hapi/joi');
 
-const createEquipment = ({
+const equipmentSchema = Joi.object({
+  id: Joi.string()
+    .min(1)
+    .required(),
+  address: Joi.string()
+    .min(1)
+    .required(),
+  contractStartDate: Joi.date().required(),
+  contractEndDate: Joi.date().required(),
+  status: Joi.string().valid('Running', 'Stopped')
+});
+
+const generateIpv4Address = () =>
+  Math.floor(Math.random() * 255) +
+  1 +
+  '.' +
+  (Math.floor(Math.random() * 255) + 0) +
+  '.' +
+  (Math.floor(Math.random() * 255) + 0) +
+  '.' +
+  (Math.floor(Math.random() * 255) + 0);
+
+const createEquipment = equipment => {
+  Joi.assert(equipment, equipmentSchema);
+  return equipment;
+};
+
+const generateEquipment = ({
   id = uuid.v1(),
-  address = 'N/A',
+  address = generateIpv4Address(),
   contractStartDate = new Date().getTime(),
-  // By default add devices with 2 year contract
-  contractEndDate = addYears(new Date().getTime(), 2).getTime(),
+  contractEndDate = addYears(
+    new Date().getTime(),
+    parseInt(1 + 10 * Math.random())
+  ).getTime(),
   status = 'Running'
 } = {}) => {
   return {
@@ -20,7 +50,7 @@ const createEquipment = ({
 };
 
 const populateEquipments = (amount = 10) => {
-  return new Array(amount).fill(null).map(() => createEquipment({}));
+  return new Array(amount).fill(null).map(() => generateEquipment({}));
 };
 
 module.exports.createEquipment = createEquipment;
