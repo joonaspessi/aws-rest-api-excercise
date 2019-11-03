@@ -22,7 +22,7 @@ module.exports.create = async event => {
         ...corsHeaders,
         'Content-Type': 'text/plain'
       },
-      body: "Couldn't create the equipment item."
+      body: JSON.stringify(e)
     };
   }
 
