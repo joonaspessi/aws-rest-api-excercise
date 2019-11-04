@@ -20,7 +20,7 @@ module.exports.create = async event => {
       statusCode: 400,
       headers: {
         ...corsHeaders,
-        'Content-Type': 'text/plain'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(e)
     };
