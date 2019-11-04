@@ -2,6 +2,10 @@
   font-size: 12px;
 }
 
+div {
+  box-sizing: border-box;
+}
+
 .App-logo {
   height: 40vmin;
 }
@@ -31,22 +35,23 @@
   flex: 1;
   width: 100%;
   min-width: 300px;
-  border: 1px solid #AAA;
+  border: 1px solid #aaa;
 }
 
 .create-equipment-container {
   width: 100%;
 }
 
-.create-label, .create-input {
+.create-label,
+.create-input {
   font-weight: bold;
   width: 80%;
   display: block;
   margin: 5px 0;
 }
 
-
-.search-form > input, .search-form > label {
+.search-form > input,
+.search-form > label {
   width: 50%;
   display: block;
   margin: 5px 0;
@@ -66,8 +71,9 @@
 
 .equipment-row > div {
   flex: 1;
-  border: 1px solid #DDD;
+  border: 1px solid #ddd;
   padding: 5px;
+  width: calc(100% / 5);
 }
 
 .header-row {
@@ -103,4 +109,16 @@
 
 .search-form > label {
   font-weight: bold;
+}
+
+.content-area--list {
+  flex: 3 3;
+}
+
+.list--refresh {
+  margin-top: 10px;
+}
+
+.list--label-limit {
+  margin-left: 5px;
 }

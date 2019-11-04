@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 class CreateEquipment extends React.Component {
   constructor(props) {
@@ -6,9 +6,11 @@ class CreateEquipment extends React.Component {
     this.submit = this.submit.bind(this);
     this.inputUpdated = this.inputUpdated.bind(this);
     this.checkboxUpdated = this.checkboxUpdated.bind(this);
-    this.state = {};
+    this.state = {
+      loading: ''
+    };
   }
-  submit() {
+  async submit() {
     const id = this.state.id;
     const address = this.state.address;
     const start = this.state.start;
@@ -22,16 +24,22 @@ class CreateEquipment extends React.Component {
       end === undefined ||
       status === undefined
     ) {
-      alert("Invalid equipment");
+      alert('Invalid equipment');
       return false;
     }
-    this.props.submit({
+    this.setState({ loading: 'Submitting' });
+    const retVal = await this.props.submit({
       id,
       address,
       contractStartDate: new Date(start).getTime(),
       contractEndDate: new Date(end).getTime(),
-      status: status ? 'Running': 'Stopped',
+      status: status ? 'Running' : 'Stopped'
     });
+    if (retVal === null) {
+      this.setState({ loading: 'Failed to add equipment' });
+    } else {
+      this.setState({ loading: 'Equipment added' });
+    }
   }
 
   checkboxUpdated(e) {
@@ -110,6 +118,7 @@ class CreateEquipment extends React.Component {
         <button className="create-button" onClick={this.submit}>
           Create
         </button>
+        <div>{this.state.loading}</div>
       </div>
     );
   }

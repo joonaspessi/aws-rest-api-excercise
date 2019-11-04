@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 class ListEquipment extends React.Component {
   constructor(props) {
@@ -8,14 +8,20 @@ class ListEquipment extends React.Component {
     this.renderEquipmentList = this.renderEquipmentList.bind(this);
     this.getDateString = this.getDateString.bind(this);
     this.state = {
-      equipment: []
+      equipment: [],
+      loading: ''
     };
   }
 
   async submit(event) {
+    this.setState({ loading: 'Loading equipment list', equipment: [] });
     const equipment = await this.props.submit(this.state.limit);
+    if (equipment === null) {
+      this.setState({ loading: 'Equipment list loading failed' });
+    }
     this.setState({
-      equipment
+      equipment,
+      loading: ''
     });
   }
 
@@ -23,6 +29,13 @@ class ListEquipment extends React.Component {
     const value = e.target.value;
     this.setState({
       limit: value
+    });
+  }
+
+  async componentDidMount() {
+    const equipment = await this.props.submit(this.state.limit);
+    this.setState({
+      equipment
     });
   }
 
@@ -52,15 +65,19 @@ class ListEquipment extends React.Component {
     return (
       <div className="create-equipment">
         <h2>List equipment</h2>
-        <input
-          type="number"
-          className="limit"
-          placeholder="10"
-          onChange={this.inputUpdated}
-        />
-        <button className="list" onClick={this.submit}>
-          Search
+        <div>
+          <input
+            type="number"
+            className="limit"
+            placeholder="50"
+            onChange={this.inputUpdated}
+          />
+          <label className="list list--label-limit">limit</label>
+        </div>
+        <button className="list list--refresh" onClick={this.submit}>
+          Refresh
         </button>
+        <div>{this.state.loading}</div>
         <div className="equipment-list">
           <div className="header-row">
             <div className="header-item">ID</div>

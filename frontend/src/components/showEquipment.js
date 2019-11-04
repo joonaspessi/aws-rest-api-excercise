@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 class ShowEquipment extends React.Component {
   constructor(props) {
@@ -6,16 +6,25 @@ class ShowEquipment extends React.Component {
     this.submit = this.submit.bind(this);
     this.inputUpdated = this.inputUpdated.bind(this);
     this.state = {
-      identifier: "",
-      equipment: null
+      identifier: '',
+      equipment: null,
+      loading: ''
     };
   }
   async submit(event) {
     console.log(event);
+    this.setState({ loading: 'Loading equipment details.', equipment: {} });
     const equipment = await this.props.submit(this.state.identifier);
-    this.setState({
-      equipment
-    });
+    if (equipment === null) {
+      this.setState({
+        loading: 'Loading equipment details failed. Check your id'
+      });
+    } else {
+      this.setState({
+        equipment,
+        loading: ''
+      });
+    }
   }
 
   inputUpdated(e) {
@@ -44,26 +53,31 @@ class ShowEquipment extends React.Component {
           <button className="identifier" onClick={this.submit}>
             Show
           </button>
+          <div>{this.state.loading}</div>
         </div>
         {this.state.equipment !== null && (
           <div className="details-table">
             <div className="details-row">
-              <div className="details-label">
-                Equipment Number
-              </div>
+              <div className="details-label">Equipment Number</div>
               <div className="details-value">{this.state.equipment.id}</div>
             </div>
             <div className="details-row">
               <div className="details-label">Address</div>
-              <div className="details-value">{this.state.equipment.address}</div>
+              <div className="details-value">
+                {this.state.equipment.address}
+              </div>
             </div>
             <div className="details-row">
               <div className="details-label">Contract Start Date</div>
-              <div className="details-value">{this.state.equipment.contractStartDate}</div>
+              <div className="details-value">
+                {this.state.equipment.contractStartDate}
+              </div>
             </div>
             <div className="details-row">
               <div className="details-label">Contract End Date</div>
-              <div className="details-value">{this.state.equipment.contractEndDate}</div>
+              <div className="details-value">
+                {this.state.equipment.contractEndDate}
+              </div>
             </div>
             <div className="details-row">
               <div className="details-label">Status (Running or Stopped)</div>
