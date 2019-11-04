@@ -32,16 +32,28 @@ module.exports.get = (event, context, callback) => {
     console.log('[DEBUG] RESULT ', result);
     // create a response
 
-    console.dir(result.Item);
-
-    const response = {
-      statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true
-      },
-      body: JSON.stringify(result.Item)
-    };
-    callback(null, response);
+    if (result.Item !== undefined) {
+      const response = {
+        statusCode: 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(result.Item)
+      };
+      callback(null, response);
+    } else {
+      const response = {
+        statusCode: 404,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true,
+          'Content-Type': 'text/plain',
+        },
+        body: 'Equipment not found.'
+      };
+      callback(null, response);
+    }
   });
 };
