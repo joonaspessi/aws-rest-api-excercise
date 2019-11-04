@@ -31,6 +31,9 @@ module.exports.get = (event, context, callback) => {
     }
     console.log('[DEBUG] RESULT ', result);
     // create a response
+
+    console.dir(result.Item);
+
     const response = {
       statusCode: 200,
       headers: {
